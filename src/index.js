@@ -2,21 +2,22 @@ import { createStore } from 'redux';
 import reducer from './reducer';
 import * as actions from './actions';
 
-const { inc, dec, rnd } = actions;
-
 const store = createStore(reducer);
 
-document.getElementById('inc').addEventListener('click', () => {
-  store.dispatch(inc())
-});
+const { inc, dec, rnd } = actions;
+const { dispatch } = store;
 
-document.getElementById('dec').addEventListener('click', () => {
-  store.dispatch(dec())
-});
+const incDispatch = () => dispatch(inc());
+const decDispatch = () => dispatch(dec());
+const rndDispatch = (value) => dispatch(rnd(value));
+
+document.getElementById('inc').addEventListener('click', incDispatch);
+
+document.getElementById('dec').addEventListener('click', decDispatch);
 
 document.getElementById('rnd').addEventListener('click', () => {
   const value = Math.floor(Math.random() * 10);
-  store.dispatch(rnd(value));
+  rndDispatch(value);
 });
 
 const update = () => {
